@@ -1,0 +1,32 @@
+{
+  "name": "express-boilerplate",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "node app"
+  },
+  "dependencies": {
+    "express": "*",
+    "ejs": "*",
+    "connect-mongo": "~0.4.0",
+    "mongoose": "~3.8.0",
+    "moment": "~2.4.0",
+    "lodash": "~2.3.0",
+    "q": "~0.9.7",
+    "passport": "~0.1.17",
+    "speakingurl": "~0.6.0",
+    "passport-facebook": "~1.0.2"
+  },
+  "devDependencies": {
+    "grunt": "~0.4.1",
+    "grunt-contrib-jshint": "~0.3.0",
+    "grunt-contrib-nodeunit": "~0.1.2",
+    "grunt-contrib-coffee": "~0.6.2",
+    "grunt-contrib-less": "~0.5.0",
+    "grunt-coffeelint": "0.0.6",
+    "grunt-contrib-watch": "~0.3.1",
+    "grunt-cli": "~0.1.6",
+    "grunt-contrib-concat": "~0.3.0",
+    "grunt-contrib-uglify": "~0.2.7"
+  }
+}

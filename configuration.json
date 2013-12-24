@@ -1,0 +1,20 @@
+{
+  "db": "happimark",
+  "cookie": "epox-happimark",
+  "port": 3200,
+  "facebook": {
+    "api": "dev",
+    "options": {
+      "production": {
+        "clientID": "",
+        "clientSecret": "",
+        "callbackURL": "http://happimark.com/auth/facebook/callback"
+      },
+      "dev": {
+        "clientID": 702427469775475,
+        "clientSecret": "4e34bb189d8bb5056a6a8b96e6b36093",
+        "callbackURL": "http://localhost:3200/auth/facebook/callback"
+      }
+    }
+  }
+}

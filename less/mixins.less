@@ -1,0 +1,67 @@
+.background-size(@size) {
+  -webkit-background-size: @size;
+     -moz-background-size: @size;
+       -o-background-size: @size;
+          background-size: @size;
+}
+.box-shadow(@shadow) {
+    -webkit-box-shadow: @shadow;
+       -moz-box-shadow: @shadow;
+            box-shadow: @shadow;
+}
+
+.box-shadow-multi(...) {
+    @shadow: ~`"@{arguments}".replace(/[\[\]]|\,\sX/g, '')`;
+    -webkit-box-shadow: @shadow;
+       -moz-box-shadow: @shadow;
+            box-shadow: @shadow;
+}
+
+.vertical(@startColor: #555, @endColor: #333) {
+  background-image: -webkit-gradient(linear, 0 100%, 0 0, from(@startColor), to(@endColor));
+  background-image: -webkit-linear-gradient(@startColor, @endColor);
+  background-image: -moz-linear-gradient(@startColor, @endColor);
+  background-image: -o-linear-gradient(@startColor, @endColor);
+  background-image: linear-gradient(@startColor, @endColor);
+  background-repeat: repeat-x;
+}
+
+.rotate(@degrees) {
+  -webkit-transform: rotate(@degrees);
+     -moz-transform: rotate(@degrees);
+      -ms-transform: rotate(@degrees);
+       -o-transform: rotate(@degrees);
+          transform: rotate(@degrees);
+}
+.rounded(@radius) {
+  -webkit-border-radius: @radius;
+     -moz-border-radius: @radius;
+          border-radius: @radius;
+}
+.translate-y(@y) {
+  -webkit-transform: translateY(@y);
+     -moz-transform: translateY(@y);
+      -ms-transform: translateY(@y);
+       -o-transform: translateY(@y);
+          transform: translateY(@y);
+}
+.animation(...) {
+  -webkit-animation: @arguments;
+     -moz-animation: @arguments;
+      -ms-animation: @arguments;
+       -o-animation: @arguments;
+          animation: @arguments;
+}
+.animation-delay(@delay) {
+  -webkit-animation-delay: @delay;
+     -moz-animation-delay: @delay;
+      -ms-animation-delay: @delay;
+       -o-animation-delay: @delay;
+          animation-delay: @delay;
+}
+.transition(@duration:0.2s, @ease:ease-out) {
+  -webkit-transition: all @duration @ease;
+     -moz-transition: all @duration @ease;
+       -o-transition: all @duration @ease;
+          transition: all @duration @ease;
+}
