@@ -43,6 +43,9 @@ app.get '/', routes.index
 app.get '/api', api.index
 app.get '/api/user/:id', api.user
 
+app.get '/api/link', api.linkList
+app.post '/api/link', api.linkAdd
+
 app.get "/logout", routes.logout
 app.get "/login/success", routes.loginSuccess
 app.get "/login/fail", routes.loginFail

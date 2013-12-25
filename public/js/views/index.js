@@ -1,10 +1,21 @@
 (function() {
-  define(['jquery', 'underscore', 'backbone', 'views/linkform', 'text!templates/index.html'], function($, _, Backbone, LinkForm, Template) {
+  define(['jquery', 'underscore', 'backbone', 'collections/link', 'views/linkform', 'text!templates/index.html', 'text!templates/linkitem.html'], function($, _, Backbone, LinkCollection, LinkForm, Template, LinkTemplate) {
     return Backbone.View.extend({
       el: '.container',
       initialize: function() {
+        var self;
+        self = this;
         this.$el.html(_.template(Template));
-        return new LinkForm();
+        new LinkForm();
+        this.linkCollection = new LinkCollection();
+        return this.linkCollection.fetch().done(function() {
+          return self.render();
+        });
+      },
+      render: function() {
+        return this.linkCollection.each(function(link) {
+          return $('#right-col').append(_.template(LinkTemplate, link.attributes));
+        });
       }
     });
   });

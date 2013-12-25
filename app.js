@@ -63,6 +63,10 @@
 
   app.get('/api/user/:id', api.user);
 
+  app.get('/api/link', api.linkList);
+
+  app.post('/api/link', api.linkAdd);
+
   app.get("/logout", routes.logout);
 
   app.get("/login/success", routes.loginSuccess);
