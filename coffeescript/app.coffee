@@ -22,7 +22,8 @@ app.configure ->
   app.set 'port', process.env.PORT or settings.port
   app.set 'views', "#{__dirname}/views"
   app.set 'view engine', 'ejs'
-  app.use express.bodyParser()
+  app.use express.urlencoded()
+  app.use express.json()
   app.use express.favicon('public/favicon.ico')
   app.use express.methodOverride()
   app.use express.cookieParser(settings.cookie)
