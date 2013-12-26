@@ -18,14 +18,13 @@ define [
   Backbone.View.extend
     el: '.container'
     initialize: ->
-      self = @
       @$el.html _.template Template
       new LinkForm()
 
       @linkCollection = new LinkCollection()
       
-      @linkCollection.fetch().done ->
-        self.render()
+      @linkCollection.fetch().done =>
+        @render()
 
     render: ->
       @linkCollection.each (link) ->

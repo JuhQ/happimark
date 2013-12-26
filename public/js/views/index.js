@@ -3,13 +3,12 @@
     return Backbone.View.extend({
       el: '.container',
       initialize: function() {
-        var self;
-        self = this;
+        var _this = this;
         this.$el.html(_.template(Template));
         new LinkForm();
         this.linkCollection = new LinkCollection();
         return this.linkCollection.fetch().done(function() {
-          return self.render();
+          return _this.render();
         });
       },
       render: function() {
