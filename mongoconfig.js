@@ -1,6 +1,6 @@
 (function() {
   module.exports = function(settings) {
-    var categorySchema, linkSchema, locationSchema, mongoose, userSchema;
+    var categorySchema, db, linkSchema, locationSchema, mongoose, userSchema;
     mongoose = require('mongoose');
     userSchema = mongoose.Schema({
       id: 'Number',
@@ -79,7 +79,23 @@
     mongoose.model('locations', locationSchema);
     mongoose.model('links', linkSchema);
     mongoose.model('categories', categorySchema);
-    return mongoose.connect('localhost', settings.db);
+    db = mongoose.connection;
+    db.on('error', function(error) {
+      return console.log('Mongodb returned error: %s', error);
+    });
+    db.on('disconnected', function() {
+      console.log('Mongodb connection disconnected');
+      return mongoose.connect('localhost', settings.db, {
+        server: {
+          auto_reconnect: true
+        }
+      });
+    });
+    return mongoose.connect('localhost', settings.db, {
+      server: {
+        auto_reconnect: true
+      }
+    });
   };
 
 }).call(this);

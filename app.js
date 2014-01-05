@@ -1,5 +1,5 @@
 (function() {
-  var FacebookStrategy, MongoStore, api, app, cluster, express, facebookOptions, http, i, mongoStore, mongoconfig, mongoose, numCPUs, passport, path, routes, server, settings;
+  var FacebookStrategy, MongoStore, api, app, cluster, express, facebookOptions, http, i, mongoconfig, mongoose, numCPUs, passport, path, routes, server, settings;
 
   express = require('express');
 
@@ -31,10 +31,6 @@
 
   server = http.createServer(app);
 
-  mongoStore = new MongoStore({
-    db: settings.db
-  });
-
   app.configure(function() {
     app.set('port', process.env.PORT || settings.port);
     app.set('views', "" + __dirname + "/views");
@@ -49,7 +45,9 @@
       cookie: {
         maxAge: 60000 * 60 * 24 * 30 * 12
       },
-      store: mongoStore
+      store: new MongoStore({
+        db: settings.db
+      })
     }));
     app.use(passport.initialize());
     app.use(passport.session());

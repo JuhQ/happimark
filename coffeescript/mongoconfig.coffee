@@ -46,4 +46,13 @@ module.exports = (settings) ->
   mongoose.model 'links', linkSchema
   mongoose.model 'categories', categorySchema
 
+  db = mongoose.connection
+
+  db.on 'error', (error) ->
+    console.log 'Mongodb returned error: %s', error
+
+  db.on 'disconnected', ->
+    console.log 'Mongodb connection disconnected'
+    mongoose.connect 'localhost', settings.db
+
   mongoose.connect 'localhost', settings.db

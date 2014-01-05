@@ -16,7 +16,6 @@ mongoconfig = require('./mongoconfig')(settings)
 
 app = express()
 server = http.createServer(app)
-mongoStore = new MongoStore db: settings.db
 
 app.configure ->
   app.set 'port', process.env.PORT or settings.port
@@ -31,7 +30,7 @@ app.configure ->
   app.use express.session
     secret: settings.cookie
     cookie: {maxAge: 60000 * 60 * 24 * 30 * 12} # one year
-    store: mongoStore
+    store: new MongoStore db: settings.db
 
   app.use passport.initialize()
   app.use passport.session()
