@@ -24,9 +24,10 @@ module.exports = (settings) ->
     created: { type: Date, default: Date.now }
   }
   linkSchema = mongoose.Schema {
+    user: 'ObjectId'
     category: 'ObjectId'
-    url: 'String'
-    title: 'String'
+    url: {type: String, required: true}
+    title: {type: String, required: true}
     description: 'String'
     screenshot: 'String'
     archived: { type: Boolean, default: false }

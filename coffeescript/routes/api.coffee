@@ -1,47 +1,87 @@
 mongoose = require 'mongoose'
+Q = require('q')
+
+findUser = (userid) ->
+  deferred = Q.defer()
+  mongoose
+    .model('users')
+    .findOne()
+    .where('id')
+    .equals(userid)
+    .select('_id username name')
+    .exec (error, data) ->
+      if error
+        deferred.reject error
+      else if !data
+        deferred.resolve null
+      else
+        deferred.resolve data
+
+  deferred.promise
 
 exports.index = (req, res) ->
   res.jsonp req.params
 
-exports.user = (req, res) ->
-  Users = mongoose.model 'users'
-  Users
-    .findOne()
-    .where('id')
-    .equals(req.params.id)
-    .exec (err, data) ->
-      if err
-        res.jsonp err
-      else if !data
+exports.findUser = (req, res) ->
+  Q.when(findUser(req.params.id))
+    .then (user) ->
+      if !user
         res.jsonp null
       else
-        res.jsonp data
+        res.jsonp user
 
 exports.linkList = (req, res) ->
-  Links = mongoose.model 'links'
-  Links
-    .find()
-    .sort(created: 'desc')
-    .exec (err, data) ->
-      if err
-        res.jsonp err
-      else if !data
-        res.jsonp null
-      else
-        res.jsonp data
+  if !req.user
+    res.jsonp error: 'Not logged in'
+  else
+    Q.when(findUser(req.user))
+      .then (user) ->
+        mongoose
+          .model('links')
+          .find()
+          .where('user')
+          .equals(user._id)
+          .sort(created: 'desc')
+          .exec (error, data) ->
+            if error
+              res.jsonp error
+            else if !data
+              res.jsonp null
+            else
+              res.jsonp data
 
-# Add a new link to the database
-exports.linkAdd = (req, res) ->
-  Links = mongoose.model 'links'
+exports.addLink = (req, res) ->
+  if !req.user
+    res.jsonp error: 'Not logged in'
+  else
 
-  newLink = new Links
-    url: req.body.url
-    title: req.body.title
-    description: req.body.description
-  
+    Q.when(findUser(req.user))
+      .then (user) ->
+        Links = mongoose.model('links')
+        link = new Links
+          url: req.body.url
+          title: req.body.title
+          description: req.body.description
+          user: user._id
 
-  newLink.save (err) ->
-    if err
-      res.jsonp err
-    else
-      res.jsonp 'success'
+        link.save (error) ->
+          if error
+            res.jsonp {error}
+          else
+            res.jsonp req.body
+
+
+exports.removeLink = (req, res) ->
+  if !req.user
+    res.jsonp error: 'Not logged in'
+  else
+    Q.when(findUser(req.user))
+      .then (user) ->
+        options =
+          _id: req.params.id
+          user: user._id
+
+        mongoose
+          .model('links')
+          .findOneAndRemove options, ->
+            res.jsonp removed: true

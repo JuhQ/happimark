@@ -1,11 +1,17 @@
 <div class="media">
-    <a class="pull-left" href="#">
-        <img class="media-object" src="http://placekitten.com/64/64" alt="KITTAAAH">
-    </a>
-    <div class="media-body">
-        <h4 class="media-heading">
-            <a href="<%= url %>"><%= title %></a>
-        </h4>
-        <%= description %>
+  <a class="pull-left" href="<%= model.get('url') %>">
+    <img class="media-object" src="http://placekitten.com/64/64" alt="KITTAAAH" />
+  </a>
+  <div class="media-body">
+    <div class="pull-left">
+      <h4 class="media-heading">
+        <a href="<%= model.get('url') %>"><%= model.get('title') %></a>
+      </h4>
+      <%= model.get('description') %>
     </div>
+    <div class="pull-right">
+      <a href="#" class="remove" data-id="<%= model.id %>">&times;</a>
+    </div>
+    <div class="clearfix"></div>
+  </div>
 </div>

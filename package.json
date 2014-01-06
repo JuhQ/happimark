@@ -15,7 +15,8 @@
     "q": "~0.9.7",
     "passport": "~0.1.17",
     "speakingurl": "~0.6.0",
-    "passport-facebook": "~1.0.2"
+    "passport-facebook": "~1.0.2",
+    "phantom": "~0.5.4"
   },
   "devDependencies": {
     "grunt": "~0.4.1",

@@ -59,11 +59,13 @@
 
   app.get('/api', api.index);
 
-  app.get('/api/user/:id', api.user);
+  app.get('/api/user/:id', api.findUser);
 
   app.get('/api/link', api.linkList);
 
-  app.post('/api/link', api.linkAdd);
+  app.post('/api/link', api.addLink);
+
+  app["delete"]('/api/link/:id', api.removeLink);
 
   app.get("/logout", routes.logout);
 

@@ -44,9 +44,16 @@
       }
     });
     linkSchema = mongoose.Schema({
+      user: 'ObjectId',
       category: 'ObjectId',
-      url: 'String',
-      title: 'String',
+      url: {
+        type: String,
+        required: true
+      },
+      title: {
+        type: String,
+        required: true
+      },
       description: 'String',
       screenshot: 'String',
       archived: {
@@ -85,17 +92,9 @@
     });
     db.on('disconnected', function() {
       console.log('Mongodb connection disconnected');
-      return mongoose.connect('localhost', settings.db, {
-        server: {
-          auto_reconnect: true
-        }
-      });
+      return mongoose.connect('localhost', settings.db);
     });
-    return mongoose.connect('localhost', settings.db, {
-      server: {
-        auto_reconnect: true
-      }
-    });
+    return mongoose.connect('localhost', settings.db);
   };
 
 }).call(this);

@@ -4,4 +4,6 @@ define [
   Backbone
 ) ->
   Backbone.Model.extend
-    url: "api/link"
+    url: ->
+      "/api/link/#{@id}"
+    idAttribute: '_id'

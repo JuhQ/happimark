@@ -1,7 +1,10 @@
 define [
   'backbone'
+  'models/link'
   ], (
   Backbone
+  LinkModel
   ) ->
   Backbone.Collection.extend
-    url: '/api/collection'
+    model: LinkModel
+    url: '/api/link'

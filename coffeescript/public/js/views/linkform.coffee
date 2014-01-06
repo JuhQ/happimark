@@ -25,15 +25,24 @@ define [
       'submit form': 'saveLink'
     initialize: ->
       @$el.html _.template Template
+    clearForm: ->
+      @$('form input, form textarea').val('')
+
+    showError: ->
+      @$el.prepend _.template ErrorTemplate, { message: 'Something went wrong' }
+
     saveLink: (event) ->
       event.preventDefault()
 
-      @model = new LinkModel()
+      model = new LinkModel()
       formdata = Backbone.Syphon.serialize(event.target)
-      @model.save formdata,
-        success: ->
-          $('#right-col').prepend _.template LinkTemplate, formdata
-        error: ->
-          @$el.prepend _.template ErrorTemplate, { message: 'Something went wrong' }
-
-      @$('form input, form textarea').val('')
+      model.save formdata,
+        success: =>
+          if model.get('error')
+            @showError()
+          else
+            $('#right-col').prepend _.template LinkTemplate, {model}
+            @clearForm()
+        error: =>
+          @showError()
+          @clearForm()

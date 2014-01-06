@@ -8,22 +8,36 @@
       initialize: function() {
         return this.$el.html(_.template(Template));
       },
+      clearForm: function() {
+        return this.$('form input, form textarea').val('');
+      },
+      showError: function() {
+        return this.$el.prepend(_.template(ErrorTemplate, {
+          message: 'Something went wrong'
+        }));
+      },
       saveLink: function(event) {
-        var formdata;
+        var formdata, model,
+          _this = this;
         event.preventDefault();
-        this.model = new LinkModel();
+        model = new LinkModel();
         formdata = Backbone.Syphon.serialize(event.target);
-        this.model.save(formdata, {
+        return model.save(formdata, {
           success: function() {
-            return $('#right-col').prepend(_.template(LinkTemplate, formdata));
+            if (model.get('error')) {
+              return _this.showError();
+            } else {
+              $('#right-col').prepend(_.template(LinkTemplate, {
+                model: model
+              }));
+              return _this.clearForm();
+            }
           },
           error: function() {
-            return this.$el.prepend(_.template(ErrorTemplate, {
-              message: 'Something went wrong'
-            }));
+            _this.showError();
+            return _this.clearForm();
           }
         });
-        return this.$('form input, form textarea').val('');
       }
     });
   });
